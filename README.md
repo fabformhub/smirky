@@ -1,203 +1,186 @@
-Below is a clean, professional, publication‑ready **README.md** for Smirky.  
-No emojis. No fluff. Just a clear, well‑structured document that positions Smirky as a serious static site generator with a Tailwind‑based default theme and Fabform integration.
+# Smirky — Minimalist Static Website Generator
 
-You can drop this directly into your repository.
+Smirky is a minimalist static website generator for people who just want to write Markdown and get a website — no ceremony, no plugins, no magic.
+
+It is perfect for building blogs, landing pages, or any static site quickly.
 
 ---
 
-# Smirky  
-A lightweight, theme‑friendly static website generator powered by Markdown and Node.js. Smirky focuses on clarity, simplicity, and extensibility, making it an ideal choice for blogs, documentation sites, and small business websites.
+## Why Smirky?
 
-Smirky ships with a default Tailwind CSS theme that includes a fully functional contact form powered by the Fabform backend service. You can use the included theme as‑is or create your own custom themes with complete control over layout, styling, and structure.
+* Write Markdown and get a website
+* Supports tags in Markdown posts
+* Minimal templates with header, navbar, footer, and content
+* Blog posts and tag pages generated automatically
+* Assets copied automatically
+* No complex configuration
+* Works with [Fabform.io](https://fabform.io) for contact forms
 
 ---
 
 ## Features
 
-- Markdown‑based content and pages  
-- Clean, minimal templating system  
-- Theme‑driven architecture  
-- Built‑in blog system with tags  
-- Tailwind CSS default theme  
-- Fabform‑powered contact form integration  
-- Zero configuration required  
-- Fast builds and simple folder structure  
+* Simple Markdown pages (`pages/`)
+* Blog posts (`content/`) with tags
+* Tag pages (`/tags/`) and blog index (`/blog/`)
+* Clean templates and partials (`theme/`)
+* Static assets copied automatically (`theme/assets/`)
+* Contact forms via [Fabform.io](https://fabform.io)
+* Generates everything in `dist/` for deployment
 
 ---
 
-## Folder Structure
+## Getting Started
 
-A typical Smirky project looks like this:
+1. Install Smirky globally or as a dev dependency:
 
-```
-project/
-  smirky/
-    smirky.js
-  content/
-  pages/
-  theme/
-    layout.html
-    index.html
-    page.html
-    post.html
-    blog.html
-    tags.html
-    partials/
-      head.html
-      navbar.html
-      footer.html
-      blog_post_card.html
-      tag_pill.html
-    assets/
-    site.json
-  dist/
+```bash
+# global installation
+npm install -g smirky
+
+# or as a dev dependency in your project
+npm install --save-dev smirky
 ```
 
+2. Create your project structure:
+
+```
+my-site/
+├── pages/          # Static pages in Markdown
+├── content/        # Blog posts in Markdown
+├── theme/          # Optional: custom templates, partials, assets
+└── package.json
+```
+
+3. Add your pages to `pages/` and your blog posts to `content/`:
+
+**Example page**: `pages/about.md`
+
+```md
+---
+title: About
+slug: about
 ---
 
-## Installation
+## About Smirky
 
-Smirky can be installed locally within your project:
-
-```
-npm install smirky
+Smirky is a minimalist static site generator. Write Markdown, run Smirky, done.
 ```
 
-Or used directly via npx:
+**Example blog post with tags**: `content/my-first-post.md`
 
-```
-npx smirky
-```
-
+```md
+---
+title: My First Post
+date: 2026-01-08
+tags:
+  - JavaScript
+  - Static Sites
 ---
 
-## Usage
-
-Smirky is designed to be simple and predictable. Once your content, pages, and theme are in place, you can build your site with a single command.
-
-### Build your site
-
+Hello! This is my first blog post powered by Smirky.
 ```
+
+> The `tags` field lets Smirky automatically generate tag pages and link posts to them.
+
+4. Build your site:
+
+```bash
 npm run build
 ```
 
-This generates a fully static website inside the `dist/` directory.
+> **Note:** Make sure your `package.json` has this script:
 
-### Development mode
+```json
+"scripts": {
+  "build": "smirky"
+}
+```
 
-If you prefer to rebuild manually during development:
+The generated site will be in the `dist/` folder. Deploy it anywhere: Netlify, Vercel, GitHub Pages, etc.
+
+---
+
+## How Themes Work
+
+Smirky uses templates and partials to assemble your pages:
+
+* `layout.html` — main wrapper
+* `index.html` — home page
+* `page.html` — static pages
+* `post.html` — individual blog posts
+* `blog.html` — blog index and tag pages
+* `tags.html` — tag index
+
+Partials are reusable components:
+
+* `head.html` — meta tags, CSS
+* `navbar.html` — navigation bar
+* `footer.html` — footer content
+* `blog_post_card.html` — blog summary card
+* `tag_pill.html` — tag label
+
+Variables such as `{{ title }}`, `{{ content }}`, `{{ tag_pills }}`, `{{ site_title }}` are replaced automatically.
+
+---
+
+## Tags
+
+* Tags are defined in Markdown frontmatter with `tags: [Tag1, Tag2]`
+* Smirky generates:
+
+  * `/tags/` — index of all tags
+  * `/tags/{tag}/` — all posts with that tag
+
+Tag pages automatically list posts that have the tag. Example URL:
 
 ```
-npm run dev
+/tags/javascript/
 ```
 
 ---
 
-## Content and Pages
+## Contact Forms (Fabform.io)
 
-Smirky uses two types of Markdown files:
+Smirky works with [Fabform.io](https://fabform.io) for contact forms without a backend.
 
-### Pages  
-Stored in `/pages`, each file becomes a standalone route:
+**Example Contact Form:**
 
-```
-/pages/about.md → /about/index.html
-```
-
-### Blog Posts  
-Stored in `/content`, each file becomes a blog post:
-
-```
-/content/my-first-post.md → /blog/my-first-post/index.html
-```
-
-Both support front‑matter:
-
-```yaml
----
-title: About Us
-slug: about
-tags: [company, mission]
----
+```html
+<form
+  action="https://fabform.io/f/FORM_ID"
+  method="POST"
+>
+  <input type="text" name="name" placeholder="Your name" required />
+  <input type="email" name="email" placeholder="Your email" required />
+  <textarea name="message" placeholder="Your message"></textarea>
+  <button type="submit">Send</button>
+</form>
 ```
 
----
+* Replace `FORM_ID` with your Fabform ID
+* Works directly on your static site
+* No server, no backend
 
-## Default Theme
-
-Smirky includes a Tailwind CSS theme located in the `/theme` directory. It provides:
-
-- Responsive layout  
-- Navigation bar  
-- Blog index and post templates  
-- Tag pages  
-- Footer  
-- Contact form powered by Fabform  
-
-### Fabform Integration
-
-The default theme includes a ready‑to‑use contact form that posts directly to Fabform.  
-To enable it, update the form action in your theme’s HTML:
-
-```
-<form action="https://fabform.io/f/your-form-id" method="POST">
-```
-
-No backend code is required.
-
----
-
-## Creating Your Own Themes
-
-Smirky is fully theme‑driven. A theme consists of:
-
-- HTML templates  
-- Partials  
-- Assets (CSS, JS, images)  
-- A `site.json` configuration file  
-
-You can create a new theme by duplicating the default theme and modifying:
-
-- Layout structure  
-- Tailwind classes or CSS framework  
-- Partials  
-- Blog card design  
-- Tag pill design  
-
-Smirky does not enforce any styling framework. You may use Tailwind, Bootstrap, custom CSS, or anything else.
-
-### Required template placeholders
-
-Every theme must include the following tokens:
-
-```
-{{ head }}
-{{ navbar }}
-{{ footer }}
-{{ content }}
-{{ title }}
-```
-
-Smirky replaces these during the build process.
+[Visit Fabform.io](https://fabform.io)
 
 ---
 
 ## Deployment
 
-Since Smirky outputs a fully static site, you can deploy the `dist/` folder to any static hosting provider:
+After running `npm run build`, deploy the `dist/` folder to any static host:
 
-- Netlify  
-- Vercel  
-- GitHub Pages  
-- Cloudflare Pages  
-- AWS S3  
-- Any static file server  
+* [Netlify](https://www.netlify.com/)
+* [Vercel](https://vercel.com/)
+* [Cloudflare Pages](https://pages.cloudflare.com/)
+* [GitHub Pages](https://pages.github.com/)
 
 ---
 
-## License
+## Philosophy
 
-MIT License  
-Copyright © Geoffrey Callaghan
+Smirky is for people who want simple static sites. No plugins, no hidden configs, no ceremony.
 
----
+**Write Markdown, run Smirky, done.**
+
+
