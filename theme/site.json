@@ -1,0 +1,8 @@
+{
+  "site": {
+    "title": "My Site",
+    "description": "A simple static site powered by a KISS SSG.",
+    "footer": "© 2026 My Site"
+  }
+}
+
